@@ -39,8 +39,8 @@ class mysql {
 //~ Параметры потключения к бд
 $db_host = 'localhost';
 $db_login = 'root';
-$db_passwd = '12345';
-$db_name = 'lion';
+$db_passwd = 'root';
+$db_name = 'tables';
 
 // подключаемся к бд
 $db = new mysql(); //~ Создаем новый объект класса
@@ -74,13 +74,14 @@ if(!empty($_POST['send'])) {
 	
 	$theme = "Заявка Z".$Nzakaz;
 
-	mail("indexseo@mail.ru", $theme, $mess, "From: whitelion.dn.ua <info@whitelion.dn.ua>\nContent-Type: text/html;\n charset=utf-8\nX-Priority: 0");
+	mail("indexseo@mail.ru", $theme, $mess, "From: indexseo@mail.ru <info@indexseo@mail.ru>\nContent-Type: text/html;\n charset=utf-8\nX-Priority: 0");
 	
 
 	echo "<h3>Заявка удачно оформлена.</h3>";
 	echo "<p>Заявке присвоен номер Z".$Nzakaz.". Наш менеджер свяжется с вами в ближайшее время.</p>";
     //Добавляем данные в БД
-    $query = "INSERT INTO `order` VALUES ('', '$Nzakaz', '$name', '$tel', '$email', '$comment')";
+    $query = "INSERT INTO `order` VALUES ('$Nzakaz', '$name', '$tel', '$email', '$site', '$message')";
+	mysql_query("CREATE TABLE IF NOT EXISTS ".'order') or die (mysql_error());
         mysql_query($query) or die (mysql_error());
         
     }
